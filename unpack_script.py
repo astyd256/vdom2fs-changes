@@ -8,6 +8,8 @@ def index_files(config, index, skip_db):
             continue
         if skip_db and category == "Databases":
             continue
+        if category == "Actions":
+            category = "Actions-Application"
         
         if isinstance(settings, dict):
             for key, value in settings.items():

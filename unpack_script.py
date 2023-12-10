@@ -132,9 +132,23 @@ def unpack_app(index, unpack_dir, temp_dir):
                         raise  # otherwise throw exception
                 shutil.copy(full_file_path, dest_path)
             else:
-                shutil.copy(full_file_path, os.path.abspath(new_files_dir))
+                parts = relative_file_path.split(os.sep)
+                dir_path = new_files_dir
+                for part in parts[:-1]:  # excluding filename from iteration
+                    dir_path = os.path.join(dir_path, part)
+                    if not dir_path.endswith(os.sep):
+                        dir_path += os.sep
+                    if not os.path.exists(dir_path):
+                        try:
+                            os.makedirs(dir_path)
+                        except OSError as e:
+                            if e.errno != os.errno.EEXIST:
+                                raise
 
-parser = argparse.ArgumentParser(description="This script unpacks VDOM apss back to repos they made of using vdom2fx.conf file")
+                dest_path = os.path.join(new_files_dir, relative_file_path)
+                shutil.copy(full_file_path, dest_path)
+
+parser = argparse.ArgumentParser(description="This script unpacks VDOM apps back to repos they made of using vdom2fx.conf file")
 
 parser.add_argument("--config_path", type=str, default="vdom2fs.conf", help="Path to the configuration file")
 parser.add_argument("--indexes_path", type=str, default=".tmp/index.json", help="Path to the indexes file")

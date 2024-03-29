@@ -9,7 +9,7 @@ This script is designed to work with VDOM applications, specifically for unpacki
 - Supports inclusion and exclusion `regex` patterns for file processing.
 - Reconstructs the directories structure of the original source repositories.
 - Creates a new directory for files that do not match the existing index.
-- Optimized to look only fro files from which project was compiled
+- Optimized to look only for files from which project was compiled
 
 ## Requirements
 
